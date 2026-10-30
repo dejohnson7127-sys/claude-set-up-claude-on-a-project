@@ -16,4 +16,8 @@ In `.claude/settings.json`:
 
 Without the `.env` deny rule, Claude could read the real `.env` while debugging config. Any secrets in it (database passwords, API keys) would end up in the conversation, could be sent to the model provider, and could get copied into code, logs, or commit messages. Without the force-push deny, one bad command could overwrite commits on `main` that other people depend on, and that is hard to undo.
 
-Deny rules are a backstop, not the main defense. `.env` also has to stay out of git. The `.gitignore` entry was indented with spaces, which made git ignore the rule, so `.env` would have been committed.
+Deny rules are a backstop, not the main defense. `.env` also has to stay out of git. In the original `.gitignore` (commit `e1ff0f6`), the entries were indented with spaces (`   .env`), so git ignored the rule and `.env` would have been committed. Commit `fc75ef3` removed the indentation, and `git check-ignore .env` now confirms the file is ignored.
+
+## Checking the setup
+
+Inside a Claude Code session, `/memory` shows the project's `CLAUDE.md` as loaded memory, and `/permissions` shows the allow, ask and deny rules from `.claude/settings.json`.
